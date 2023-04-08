@@ -66,11 +66,11 @@ int main(int argc, char *argv[])
 
     input = getenv("OTP_TOKEN");
     if (!input || strcmp(input, "") == 0) {
-        fprintf(stderr, "Enter the validation code: ");
-        if (fgets(input_a, sizeof(input_a), stdin) == NULL) {
-            exit(1);
+        input = getpass("Enter the validation code: ");
+        if (input == NULL || strlen(input) != 6) {
+            fprintf(stderr, "Invalid\n");
+            exit(1);    
         }
-        input = input_a;
     }
 
     if (!b32decode(argv[1], sbytes)) {
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    fprintf(stderr, "Invalid");
+    fprintf(stderr, "Invalid\n");
 
     return 1;
 }
